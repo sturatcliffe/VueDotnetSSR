@@ -1,3 +1,5 @@
+var prerendering = require('aspnet-prerendering');
+
 process.env.VUE_ENV = 'server';
 
 const fs = require('fs');
@@ -8,7 +10,8 @@ const code = fs.readFileSync(filePath, 'utf8');
 
 const bundleRenderer = require('vue-server-renderer').createBundleRenderer(code);
 
-module.exports = function (params) {
+//module.exports = function (params) {
+module.exports = prerendering.createServerRenderer(function (params) {
     return new Promise(function (resolve, reject) {
       const context = { url: params.url };  
 
@@ -25,4 +28,4 @@ module.exports = function (params) {
       });
         
     });
-};
+});
